@@ -8,8 +8,9 @@ class ProductCreate(BaseModel):
     name: str = Field(min_length=1, max_length=120)
     description: str | None = None
     price: Decimal = Field(gt=0, max_digits=10, decimal_places=2)
-    image_url: str | None = Field(default=None, max_length=500)
     category_id: int = Field(gt=0)
+
+    model_config = ConfigDict(extra="forbid")
 
     @field_validator("name")
     @classmethod
@@ -26,6 +27,7 @@ class ProductUpdate(ProductCreate):
 
 class ProductRead(ProductUpdate):
     id: int
+    image_url: str | None
     created_at: datetime
     updated_at: datetime
 

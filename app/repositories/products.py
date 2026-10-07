@@ -1,11 +1,11 @@
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.models.product import Product
 
 
 def get(db: Session, product_id: int) -> Product | None:
-    return db.get(Product, product_id)
+    return db.get(Product, product_id, options=[selectinload(Product.image)])
 
 
 def list_filtered(
@@ -14,7 +14,7 @@ def list_filtered(
     available: bool | None = None,
     search: str | None = None,
 ) -> list[Product]:
-    query = select(Product).order_by(Product.id)
+    query = select(Product).options(selectinload(Product.image)).order_by(Product.id)
     if category_id is not None:
         query = query.where(Product.category_id == category_id)
     if available is not None:

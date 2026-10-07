@@ -22,6 +22,7 @@ services:
       DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-coffee}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db:5432/${POSTGRES_DB:-coffee_shop}
       SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      MAX_IMAGE_SIZE_BYTES: ${MAX_IMAGE_SIZE_BYTES:-5000000}
     ports:
       - "8000:8000"
 
